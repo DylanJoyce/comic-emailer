@@ -1,0 +1,88 @@
+#!/usr/bin/python
+
+import datetime
+import re
+import urllib
+import os
+import errno
+import comic_settings
+
+today = str(datetime.date.today())
+comic_directory = '/Users/Plemer/Comics/' + today
+comics = ['calvinandhobbes', 'foxtrotclassics']
+
+class MyOpener(urllib.URLopener):
+    version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
+
+base_url = 'http://www.gocomics.com/'
+img_re = re.compile(r'src="(http://assets\.amuniversal\.com/[a-z0-9]{32}\?width=900.0)"')
+
+def get_image_url(comic):
+    url = base_url + comic + '/'
+    myopener = MyOpener()
+    page = myopener.open(url)
+    response = page.read()
+    match = img_re.search(response)
+    image_url = match.group(1)
+    return image_url    
+    
+os.mkdir(comic_directory)
+
+for comic in comics:
+    print(comic + " complete")
+    image = urllib.urlopen(get_image_url(comic)).read()
+    filename = comic_directory + "/" + today + ' ' + comic + '.jpg'
+    f = open(filename, 'w')
+    f.write(image)
+    f.close()
+
+date = 
+ch_img_url = "http://images.ucomics.com/comics/ch/" + date +".gif"
+ftcl_img_url = "http://images.ucomics.com/comics/ftcl/" + date +".gif"
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>goComics_proto_email</title>
+</head>
+
+<body>
+
+<table border="0" align="center">
+  <tr>
+    <th>Calvin and Hobbes by Bill Watterson</th>
+  </tr>
+    <td><img style="border:0;" src="http://images.ucomics.com/comics/ch/2013/ch130107.gif" height="192" width="600" alt="Calvin and Hobbes" /></td> 
+  <tr>
+  <tr>
+    <th>Foxtrot Classics</th>
+  </tr>
+    <td><img style="border:0;" src="http://images.ucomics.com/comics/ftcl/2013/ftcl130119.gif" height="192" width="600" alt="Foxtrot Classics" /></td> 
+  <tr> 
+</table>
+
+<!-- 
+  <div style="font-family:Arial,Helvetica,sans-serif;padding:0; width: 760px; margin:0 auto;">
+    <table style="border-collapse:collapse;width:750px;border-width:0px;padding:0px;">
+
+      <tr>
+
+        <td style="width:0px;"> </td>
+        <td style="width:0px;">
+          <div style="margin-top:10px;margin-bottom:5px;color:#000000;font-size:18px;font-weight:normal;line-height:16px;font-family:Arial;">
+            Calvin and Hobbes by Bill Watterson
+          </div>
+          <div style="border:0; background-color:#FFFFFF;text-align:center">
+              <img style="border:0;" src="http://images.ucomics.com/comics/ch/2013/ch130107.gif" height="192" width="600" alt="Calvin and Hobbes" />
+          </div>
+
+        </td>
+      
+      </tr>
+      
+    </table>
+  </div>
+ -->
+</body>
+</html>

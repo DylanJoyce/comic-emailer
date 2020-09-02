@@ -1,0 +1,1 @@
+30 05 * * * python $HOME/Dropbox/Code/Python/Projects/Comics/comics_html_emailer.py
